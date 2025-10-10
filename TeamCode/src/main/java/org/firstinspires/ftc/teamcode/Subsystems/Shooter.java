@@ -1,0 +1,60 @@
+package org.firstinspires.ftc.teamcode.Subsystems;
+
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.arcrobotics.ftclib.controller.PIDFController;
+
+public class Shooter {
+
+    private DcMotorEx shooterMotor;
+    boolean shooterFlag;
+    private int targetVelocity;
+
+
+    public static double kP = 0.05;
+    public static double kI = 0;
+    public static double kD = 0;
+    public static double kF = 0;
+    public static double velocityTolerance = 0;
+    PIDFController pidfController = new PIDFController(kP, kI, kD, kF);
+
+    public void initiate(HardwareMap hardwareMap){
+       shooterMotor = hardwareMap.get(DcMotorEx.class,"shooter");
+       reset();
+    }
+    public void reset(){
+        shooterMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        shooterMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+    }
+
+    public void run(){
+        pidfController.setP(kP);
+        pidfController.setI(kI);
+        pidfController.setF(kF);
+        pidfController.setD(kD);
+        pidfController.setTolerance(velocityTolerance);
+        double power = 0;
+        double maxPower = 1;
+
+        power = pidfController.calculate(shooterMotor.getVelocity(),targetVelocity);
+        if(Math.abs(power)>maxPower){
+            power = (maxPower * Math.signum(power));
+        }
+        shooterMotor.setPower(power);
+    }
+    public void setTarVelocity(int velocity){targetVelocity = velocity;}
+
+    public void runConditional(double power, boolean current, boolean previous) {
+        if (current && !previous) {
+            shooterFlag = !shooterFlag;
+        }
+        if (shooterFlag) {
+            shooterMotor.setPower(power);
+        }
+        else{
+            shooterMotor.setPower(0);
+        }
+    }
+}
+
