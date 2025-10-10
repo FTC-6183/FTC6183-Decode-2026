@@ -9,7 +9,8 @@ public class Shooter {
 
     private DcMotorEx shooterMotor;
     boolean shooterFlag;
-    private int targetVelocity;
+    private double targetVelocity;
+    private double dropThreshold;
 
 
     public static double kP = 0.05;
@@ -43,7 +44,13 @@ public class Shooter {
         }
         shooterMotor.setPower(power);
     }
-    public void setTarVelocity(int velocity){targetVelocity = velocity;}
+    public void setTargetVelocity(double velocity){targetVelocity = velocity;}
+
+    public double getTargetVelocity(){return targetVelocity;}
+
+    public double getVelocity(){return shooterMotor.getVelocity();}
+
+    public double getDropThreshold(){return dropThreshold;}
 
     public void runConditional(double power, boolean current, boolean previous) {
         if (current && !previous) {
