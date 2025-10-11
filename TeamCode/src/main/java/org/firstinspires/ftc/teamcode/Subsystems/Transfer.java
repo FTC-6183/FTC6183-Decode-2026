@@ -1,9 +1,11 @@
 package org.firstinspires.ftc.teamcode.Subsystems;
 
+import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
+@Config
 public class Transfer {
     DcMotor transfer;
     Servo kicker;
@@ -13,9 +15,8 @@ public class Transfer {
         DOWN
     }
 
-    private double kickUpPosition = 1;
-    private double kickDownPosition = 0;
-    private double kickPosition;
+    public static double kickUpPosition = 1;
+    public static double kickDownPosition = 0;
 
     private boolean transferFlag;
     private KickerStates currentKickerState = KickerStates.UP;
@@ -40,7 +41,7 @@ public class Transfer {
         transfer.setPower(power);
     }
 
-    public void transferBallConditional(boolean current, boolean previous){
+    public void transferBallConditional(double power, boolean current, boolean previous){
         if (current && !previous) {
             transferFlag = !transferFlag;
         }
@@ -48,9 +49,21 @@ public class Transfer {
             transfer.setPower(1);
         }
         else{
+            transfer.setPower(-1);
+        }
+    }
+    public void transferReverseBallConditional(double power, boolean current, boolean previous){
+        if (current && !previous) {
+            transferFlag = !transferFlag;
+        }
+        if (transferFlag) {
+            transfer.setPower(-power);
+        }
+        else{
             transfer.setPower(0);
         }
     }
+
 
 
 }

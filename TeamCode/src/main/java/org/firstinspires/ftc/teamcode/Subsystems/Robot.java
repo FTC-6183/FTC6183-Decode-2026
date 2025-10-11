@@ -20,7 +20,6 @@ public class Robot{
     }
 
     public void fireBall(){
-        // Should initially be open
         intake.setGate(Intake.GateStates.CLOSE);
         transfer.run(1);
         boolean ballShot = false;
@@ -29,7 +28,6 @@ public class Robot{
             if(difference > shooter.getDropThreshold()){ballShot = true;}
         }
         intake.run(-1);
-        transfer.setKicker(Transfer.KickerStates.DOWN);
         ballShot = false;
         while(!ballShot){
             intake.run(0);

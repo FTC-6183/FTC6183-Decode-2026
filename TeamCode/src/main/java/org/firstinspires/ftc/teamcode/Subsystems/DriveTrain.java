@@ -30,17 +30,15 @@
 package org.firstinspires.ftc.teamcode.Subsystems;
 
 import com.arcrobotics.ftclib.controller.PIDFController;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.util.ElapsedTime;
 
 /*
  * Holonomic Drive
  */
 
-    public class Drivetrain {
+    public class DriveTrain {
         DcMotor frontLeftMotor;
         DcMotor backLeftMotor;
         DcMotor frontRightMotor;
@@ -82,7 +80,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 
 
-            frontLeftMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+            frontLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
             backLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
             frontRightMotor.setDirection(DcMotorSimple.Direction.FORWARD);
             backRightMotor.setDirection(DcMotorSimple.Direction.FORWARD);
