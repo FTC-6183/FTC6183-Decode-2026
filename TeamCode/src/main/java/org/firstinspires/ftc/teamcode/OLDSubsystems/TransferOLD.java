@@ -1,14 +1,13 @@
-package org.firstinspires.ftc.teamcode.Subsystems;
+package org.firstinspires.ftc.teamcode.OLDSubsystems;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.Servo;
 
 @Config
-public class Transfer {
+public class TransferOLD {
     DcMotor transfer;
-    Servo kicker;
+    //Servo kicker;
 
     public enum KickerStates{
         UP,
@@ -23,12 +22,11 @@ public class Transfer {
 
     public void initiate(HardwareMap hardwareMap){
         transfer = hardwareMap.dcMotor.get("trans");
-        kicker = hardwareMap.servo.get("kick");
     }
 
     public KickerStates getKickerState(){return currentKickerState;}
-
-    public void setKicker(KickerStates input){
+/*
+public void setKicker(KickerStates input){
         if(input == KickerStates.UP){
             kicker.setPosition(kickUpPosition);
         }
@@ -36,6 +34,9 @@ public class Transfer {
             kicker.setPosition(kickDownPosition);
         }
     }
+
+
+ */
 
     public void run(double power){
         transfer.setPower(power);

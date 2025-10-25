@@ -4,10 +4,10 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.teamcode.Subsystems.DriveTrain;
-import org.firstinspires.ftc.teamcode.Subsystems.Intake;
-import org.firstinspires.ftc.teamcode.Subsystems.Shooter;
-import org.firstinspires.ftc.teamcode.Subsystems.Transfer;
+import org.firstinspires.ftc.teamcode.OLDSubsystems.DriveTrainOLD;
+import org.firstinspires.ftc.teamcode.OLDSubsystems.IntakeOLD;
+import org.firstinspires.ftc.teamcode.OLDSubsystems.ShooterOLD;
+import org.firstinspires.ftc.teamcode.OLDSubsystems.TransferOLD;
 
 @Autonomous
 public class FirePreloadMoveLeft extends LinearOpMode{
@@ -16,10 +16,10 @@ public class FirePreloadMoveLeft extends LinearOpMode{
     ElapsedTime timer = new ElapsedTime();
     @Override
     public void runOpMode() throws InterruptedException {
-        DriveTrain driveTrain = new DriveTrain();
-        Intake intake = new Intake();
-        Shooter shooter = new Shooter();
-        Transfer transfer = new Transfer();
+        DriveTrainOLD driveTrain = new DriveTrainOLD();
+        IntakeOLD intake = new IntakeOLD();
+        ShooterOLD shooter = new ShooterOLD();
+        TransferOLD transfer = new TransferOLD();
 
         driveTrain.initiate(hardwareMap);
         intake.initiate(hardwareMap);
@@ -31,7 +31,7 @@ public class FirePreloadMoveLeft extends LinearOpMode{
             while(timer.time()<=20){
                 shooter.setTargetVelocity(velocity);
                 shooter.run();
-                intake.setGate(Intake.GateStates.CLOSE);
+                intake.setGate(IntakeOLD.GateStates.CLOSE);
                 if ((Math.abs(velocity) - Math.abs(shooter.getVelocity())) < threshold) {
                     intake.run(-1);
                     transfer.run(-1);

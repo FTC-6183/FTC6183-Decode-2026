@@ -1,11 +1,13 @@
-package org.firstinspires.ftc.teamcode.Subsystems;
+package org.firstinspires.ftc.teamcode.OLDSubsystems;
 
+import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.arcrobotics.ftclib.controller.PIDFController;
 
-public class Shooter {
+@Config
+public class ShooterOLD {
 
     private DcMotorEx shooterMotor;
     boolean shooterFlag;
