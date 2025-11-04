@@ -26,11 +26,19 @@ public class Intake implements Subsystem {
     private ServoEx gate = new ServoEx("gate");
 
 
-    public Command gateOpen = new SetPosition(gate,gateOpenPosition).requires(gate);
-    public Command gateClose = new SetPosition(gate,gateClosePosition).requires(gate);
+    public Command gateOpen(){
+        return new SetPosition(gate,gateOpenPosition).requires(gate);
+    }
+    public Command gateClose(){
+        return new SetPosition(gate,gateClosePosition).requires(gate);
+    }
 
-    public Command intakeBall = new SetPower(intakeMotor,1).requires(intakeMotor);
-    public Command transferBall = new SetPower(intakeMotor,-1).requires(intakeMotor);
+    public Command intakeBall(){
+        return new SetPower(intakeMotor,1).requires(intakeMotor);
+    }
+    public Command transferBall(){
+        return new SetPower(intakeMotor,-1).requires(intakeMotor);
+    }
     public String getGateState(){
         double gatePosition = gate.getPosition();
         if(gatePosition == gateOpenPosition){
@@ -43,12 +51,5 @@ public class Intake implements Subsystem {
     }
     public void status(Telemetry telemetry) {
         telemetry.addData("Gate State", getGateState());
-    }
-    public Button toggleGate(boolean input){
-        Button toggleGate = button(() -> input);
-        toggleGate.toggleOnBecomesTrue()
-                .whenBecomesTrue(() -> gateOpen.schedule())
-                .whenBecomesFalse(() -> gateClose.schedule());
-        return toggleGate;
     }
 }

@@ -57,8 +57,8 @@ public class RobotIn5WeeksTeleOp extends NextFTCOpMode {
 
         Command waitUntilOn = new WaitUntil(()->onOffFlag);
 
-        //Intake Command
-        ParallelGroup intakeCommand = new ParallelGroup(
+        /*
+           ParallelGroup intakeCommand = new ParallelGroup(
                 Shooter.INSTANCE.setVelocity(0),
                 Intake.INSTANCE.gateOpen,
                 Intake.INSTANCE.intakeBall,
@@ -70,8 +70,22 @@ public class RobotIn5WeeksTeleOp extends NextFTCOpMode {
                 waitUntilOn,
                 intakeCommand
         );
+         */
+        //Intake Command
+        SequentialGroup intakeSequence = new SequentialGroup(
+                new InstantCommand(() -> intakeStatus.set("INTAKE MODE")),
+                waitUntilOn,
+                // create new command instances each time
+                new ParallelGroup(
+                        Shooter.INSTANCE.setVelocity(0),
+                        Intake.INSTANCE.gateOpen(),
+                        Intake.INSTANCE.intakeBall(),
+                        Transfer.INSTANCE.transferIntake()
+                )
+        );
 
-        //Shoot Commands
+
+        /*
         ParallelGroup shootSequenceOne = new ParallelGroup(
                 Intake.INSTANCE.gateClose,
                 Shooter.INSTANCE.setVelocity(velocity)
@@ -91,6 +105,23 @@ public class RobotIn5WeeksTeleOp extends NextFTCOpMode {
                 shooterToSpeed,
                 shootSequenceTwo
         );
+        */
+        SequentialGroup completeShootSequence = new SequentialGroup(
+                new InstantCommand(() -> intakeStatus.set("SHOOTER MODE")),
+                waitUntilOn,
+                new ParallelGroup(
+                        Intake.INSTANCE.gateClose(),
+                        Shooter.INSTANCE.setVelocity(velocity)
+                ),
+                new WaitUntil(() ->
+                        Math.abs(Math.abs(Shooter.INSTANCE.getVelocity()) - Math.abs(velocity)) < threshold),
+                new ParallelGroup(
+                        Intake.INSTANCE.transferBall(),
+                        Transfer.INSTANCE.transferShoot()
+                )
+        );
+
+
 
         Button shootIntakeButton = button(()->gamepad1.left_bumper);
 
@@ -101,8 +132,8 @@ public class RobotIn5WeeksTeleOp extends NextFTCOpMode {
 
         Button toggleGate = button(()->gamepad1.y);
         toggleGate.toggleOnBecomesTrue()
-                .whenBecomesTrue(Intake.INSTANCE.gateOpen)
-                .whenBecomesFalse(Intake.INSTANCE.gateClose);
+                .whenBecomesTrue(Intake.INSTANCE.gateOpen())
+                .whenBecomesFalse(Intake.INSTANCE.gateClose());
 
         Button releaseBall = button(()->(gamepad1.right_trigger > 0.3));
         releaseBall

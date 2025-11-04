@@ -13,7 +13,12 @@ public class Transfer implements Subsystem {
     private Transfer(){}
     private MotorEx transfer = new MotorEx("trans");
 
-    public Command transferIntake = new SetPower(transfer,1).requires(this);
-    public Command transferShoot = new SetPower(transfer,-1).requires(this);
+    public Command transferIntake(){
+        return new SetPower(transfer,1).requires(this);
+    }
+    public Command transferShoot()
+    {
+        return new SetPower(transfer, -1).requires(this);
+    }
 
 }
