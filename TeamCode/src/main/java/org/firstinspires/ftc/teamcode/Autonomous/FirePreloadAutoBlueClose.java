@@ -1,38 +1,54 @@
 package org.firstinspires.ftc.teamcode.Autonomous;
 
-import com.pedropathing.follower.Follower;
-import com.pedropathing.geometry.BezierLine;
-import com.pedropathing.geometry.Pose;
-import com.pedropathing.paths.PathChain;
-import com.pedropathing.util.Timer;
+import static org.firstinspires.ftc.teamcode.Subsystems.Shooter.shootVelocity;
+import static org.firstinspires.ftc.teamcode.Subsystems.Shooter.threshold;
+
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-@Autonomous(name = "FirePreloadAutoBlueClose", group = "BLUE")
-public class FirePreloadAutoBlueClose extends LinearOpMode {
-    private Follower follower;
-    private Timer pathTimer, actionTimer, opmodeTimer;
-    private int pathState;
-    private PathChain shootPath, endPath;
+import org.firstinspires.ftc.teamcode.Subsystems.Drivetrain;
+import org.firstinspires.ftc.teamcode.Subsystems.Intake;
+import org.firstinspires.ftc.teamcode.Subsystems.Shooter;
+import org.firstinspires.ftc.teamcode.Subsystems.Transfer;
 
-    private final Pose startPose = new Pose(28.416,132.096,Math.toRadians(145));
-    private final Pose shootPose = new Pose(32.256,122.496,Math.toRadians(145));
-    private final Pose endPose = new Pose(62.208,132.864,Math.toRadians(145));
-
-    public void buildPaths(){
-        shootPath = follower.pathBuilder()
-                .addPath(new BezierLine(startPose,shootPose))
-                .setConstantHeadingInterpolation(startPose.getHeading())
-                .build();
-        endPath = follower.pathBuilder()
-                .addPath(new BezierLine(shootPose,endPose))
-                .setLinearHeadingInterpolation(shootPose.getHeading(),endPose.getHeading())
-                .build();
-
+import dev.nextftc.core.commands.Command;
+import dev.nextftc.core.commands.delays.WaitUntil;
+import dev.nextftc.core.commands.groups.ParallelGroup;
+import dev.nextftc.core.commands.groups.SequentialGroup;
+import dev.nextftc.core.commands.utility.InstantCommand;
+import dev.nextftc.core.commands.utility.PerpetualCommand;
+import dev.nextftc.core.components.SubsystemComponent;
+import dev.nextftc.ftc.NextFTCOpMode;
+import dev.nextftc.ftc.components.BulkReadComponent;
+/*
+@Autonomous(name = "FirePreloadAutoCloseBlue",group ="Blue")
+public class FirePreloadAutoBlueClose extends NextFTCOpMode {
+    public FirePreloadAutoBlueClose() {
+        addComponents(
+                new SubsystemComponent(Shooter.INSTANCE, Drivetrain.INSTANCE, Intake.INSTANCE, Transfer.INSTANCE),
+                BulkReadComponent.INSTANCE
+        );
     }
+    private ParallelGroup shootSequenceOne = new ParallelGroup(
+                Intake.INSTANCE.gateClose,
+                Shooter.INSTANCE.setVelocity(shootVelocity)
+        );
+    private ParallelGroup shootSequenceTwo = new ParallelGroup(
+                Intake.INSTANCE.transferBall,
+                Transfer.INSTANCE.transferShoot
+        );
+    private Command shooterToSpeed = new WaitUntil(()->(Math.abs(Shooter.INSTANCE.getVelocity())-shootVelocity)<threshold);
+    private SequentialGroup shootSequence = new SequentialGroup(
+                shootSequenceOne,
+                shooterToSpeed,
+                shootSequenceTwo
+        );
+    private int ballShot = 0;
 
-    @Override
-    public void runOpMode() throws InterruptedException {
+    private Command ballsShotDetector = new InstantCommand(()->{if((shootVelocity-Shooter.INSTANCE.getVelocity())>threshold)});
 
-    }
+    private Command shooterToSpeed = new WaitUntil(()->(Math.abs(Shooter.INSTANCE.getVelocity())-shootVelocity)<threshold);
+
+
+
 }
+*/

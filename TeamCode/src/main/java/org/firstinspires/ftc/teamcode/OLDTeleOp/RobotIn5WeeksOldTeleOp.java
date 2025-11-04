@@ -10,7 +10,6 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.OLDSubsystems.DriveTrainOLD;
 import org.firstinspires.ftc.teamcode.OLDSubsystems.IntakeOLD;
 import org.firstinspires.ftc.teamcode.OLDSubsystems.ShooterOLD;
@@ -18,7 +17,7 @@ import org.firstinspires.ftc.teamcode.OLDSubsystems.TransferOLD;
 
 @Config
 @TeleOp
-public class RobotIn5WeeksTeleOp extends LinearOpMode {
+public class RobotIn5WeeksOldTeleOp extends LinearOpMode {
     public static double velocity = -1500;
     public static double escapeVelocity = 300;
     public static double intakePower = 1;
@@ -67,8 +66,8 @@ public class RobotIn5WeeksTeleOp extends LinearOpMode {
                     intake.setGate(IntakeOLD.GateStates.CLOSE);
                     if (intake.getPosition() == gateClosePosition) {
                         shooter.setTargetVelocity(velocity);
+                        timer.reset();
                         if ((Math.abs(velocity) - Math.abs(shooter.getVelocity())) < threshold) {
-                            timer.reset();
                             telemetry.addData("Timer", timer.time());
                             if (timer.time() >= delay) {
                                 intake.run(-1);

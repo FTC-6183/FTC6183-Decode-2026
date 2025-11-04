@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Autonomous;
+package org.firstinspires.ftc.teamcode.OLDAutonomous;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -10,7 +10,7 @@ import org.firstinspires.ftc.teamcode.OLDSubsystems.ShooterOLD;
 import org.firstinspires.ftc.teamcode.OLDSubsystems.TransferOLD;
 
 @Autonomous
-public class FirePreloadMoveLeft extends LinearOpMode{
+public class OLDFirePreloadMoveRight extends LinearOpMode{
     public static double threshold = 20;
     public static double velocity = -1500;
     ElapsedTime timer = new ElapsedTime();
@@ -42,7 +42,7 @@ public class FirePreloadMoveLeft extends LinearOpMode{
                 shooter.setTargetVelocity(0);
                 intake.run(0);
                 transfer.run(0);
-                driveTrain.run(0,-0.3,0);
+                driveTrain.run(0,0.3,0);
             }
             sleep(30000);
         }
