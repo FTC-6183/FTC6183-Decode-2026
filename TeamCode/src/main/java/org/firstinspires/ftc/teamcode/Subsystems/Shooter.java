@@ -11,6 +11,7 @@ import dev.nextftc.control.feedback.PIDCoefficients;
 import dev.nextftc.control.feedback.PIDElement;
 import dev.nextftc.core.commands.Command;
 import dev.nextftc.core.subsystems.Subsystem;
+import dev.nextftc.ftc.ActiveOpMode;
 import dev.nextftc.hardware.controllable.RunToState;
 import dev.nextftc.hardware.controllable.RunToVelocity;
 import dev.nextftc.hardware.impl.MotorEx;
@@ -37,20 +38,13 @@ public class Shooter implements Subsystem {
     //TODO
     public double distanceToVelocity(double distance){return 0;}
     public Command setVelocity(double velocity){
-        return new RunToState(
-                velocityControl,
-                new KineticState(
-                        0,
-                        velocity,
-                        0
-                ),
-                new KineticState(
-                        Double.POSITIVE_INFINITY,
-                        velocity,
-                        Double.POSITIVE_INFINITY
-                )
-
+        return new RunToVelocity(
+                velocityControl, velocity
         ).requires(this);
+    }
+    @Override
+    public void periodic(){
+        shooterMotor.setPower(velocityControl.calculate(shooterMotor.getState()));
     }
     public double getVelocity(){return shooterMotor.getVelocity();}
 }

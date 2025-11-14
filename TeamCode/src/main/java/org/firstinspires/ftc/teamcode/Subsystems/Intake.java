@@ -2,7 +2,9 @@ package org.firstinspires.ftc.teamcode.Subsystems;
 
 import dev.nextftc.bindings.Button;
 import dev.nextftc.core.commands.Command;
+import dev.nextftc.core.commands.utility.InstantCommand;
 import dev.nextftc.core.subsystems.Subsystem;
+import dev.nextftc.ftc.ActiveOpMode;
 import dev.nextftc.hardware.impl.MotorEx;
 import dev.nextftc.hardware.impl.ServoEx;
 import dev.nextftc.hardware.positionable.SetPosition;
@@ -24,6 +26,7 @@ public class Intake implements Subsystem {
 
     private MotorEx intakeMotor = new MotorEx("intake");;
     private ServoEx gate = new ServoEx("gate");
+    private double power = 0;
 
 
     public Command gateOpen(){
@@ -34,11 +37,18 @@ public class Intake implements Subsystem {
     }
 
     public Command intakeBall(){
-        return new SetPower(intakeMotor,1).requires(intakeMotor);
+        return new SetPower(intakeMotor,1);
+        //return new InstantCommand(()->power=1);
     }
     public Command transferBall(){
-        return new SetPower(intakeMotor,-1).requires(intakeMotor);
+        return new SetPower(intakeMotor,-1);
+        //return new InstantCommand(()->power=-1);
     }
+
+    public Command off(){
+        return new SetPower(intakeMotor, 0);
+    }
+
     public String getGateState(){
         double gatePosition = gate.getPosition();
         if(gatePosition == gateOpenPosition){

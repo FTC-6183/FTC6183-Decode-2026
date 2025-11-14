@@ -18,16 +18,14 @@ import org.firstinspires.ftc.teamcode.OLDSubsystems.TransferOLD;
 @Config
 @TeleOp
 public class RobotIn5WeeksOldTeleOp extends LinearOpMode {
-    public static double velocity = -1500;
+    public static double velocity = -2300;
     public static double escapeVelocity = 300;
     public static double intakePower = 1;
     public static double transferPower = 1;
-    public static double threshold = 10;
+    public static double threshold = 50;
     private boolean intakeToggle = true;
     private boolean onOffToggle = true;
     ElapsedTime timer = new ElapsedTime();
-    public static double delay = 1;
-
     @Override
     public void runOpMode() throws InterruptedException {
         Gamepad currentGamepad1 = new Gamepad();
@@ -68,11 +66,9 @@ public class RobotIn5WeeksOldTeleOp extends LinearOpMode {
                         shooter.setTargetVelocity(velocity);
                         timer.reset();
                         if ((Math.abs(velocity) - Math.abs(shooter.getVelocity())) < threshold) {
-                            telemetry.addData("Timer", timer.time());
-                            if (timer.time() >= delay) {
                                 intake.run(-1);
                                 transfer.run(-1);
-                            }
+
                         }
                     }
                 }
